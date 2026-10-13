@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FUNCTION QUEST: FASE F</title>
+<style>
+/* ===== TEMA & WARNA (ubah di sini) ===== */
+:root{--bg:#0b1220;--card:#141e33;--line:#2a3a5e;--ac:#22d3ee;--ac2:#a78bfa;--ok:#34d399;--bad:#fb7185;--tx:#f1f5f9;--mut:#a9b8d4}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 20% 0,#16244a,#0b1220 60%);color:var(--tx);font:20px/1.55 "Segoe UI",system-ui,sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+.m{font-family:"Cambria Math","STIX Two Math",Georgia,serif;font-style:italic;color:var(--ac)}
+header{display:flex;gap:12px;align-items:center;padding:8px 16px;background:#0d1730;border-bottom:1px solid var(--line);flex-wrap:wrap}
+header b{letter-spacing:2px}
+#pb{flex:1;min-width:140px;height:14px;background:#1c2a4a;border-radius:9px;overflow:hidden}
+#pf{height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .6s}
+button{font:inherit;font-weight:600;color:var(--tx);background:#1d2b4d;border:2px solid var(--line);border-radius:12px;padding:10px 16px;min-height:48px;cursor:pointer;touch-action:manipulation}
+button:hover{border-color:var(--ac)}button.p{background:linear-gradient(90deg,#0891b2,#7c3aed);border:0}
+nav{display:flex;gap:6px;padding:6px 12px;overflow-x:auto;background:#0d1730}
+nav button{white-space:nowrap;font-size:16px;min-height:42px;padding:6px 12px}nav button.on{border-color:var(--ac);background:#10315a}nav button.ok::after{content:" ✓";color:var(--ok)}
+main{flex:1;overflow:auto;padding:18px 28px}
+.pg{display:none;max-width:1100px;margin:auto}.pg.on{display:block;animation:in .4s}
+@keyframes in{from{opacity:0;transform:translateY(10px)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 22px;margin:12px 0}
+h1{font-size:2.3em;margin:.2em 0;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;color:transparent}
+h2{margin:.2em 0;color:var(--ac)}
+.opt{display:block;width:100%;text-align:left;margin:8px 0}.opt.r{background:#064e3b;border-color:var(--ok)}.opt.w{background:#4c0519;border-color:var(--bad)}
+input[type=number],input[type=text],textarea{font:inherit;background:#0b1220;color:var(--tx);border:2px solid var(--line);border-radius:10px;padding:8px 12px;width:150px}
+textarea{width:100%}input[type=range]{width:100%;height:36px}
+.fb{min-height:1.6em;margin-top:8px;font-weight:600}.fb.r{color:var(--ok)}.fb.w{color:var(--bad)}
+.row{display:flex;gap:16px;flex-wrap:wrap;align-items:center}
+.box{background:#0b1a33;border:2px solid var(--ac);border-radius:12px;padding:10px 18px;min-width:120px;text-align:center;transition:.4s}
+.mach{border-color:var(--ac2);box-shadow:0 0 18px #a78bfa55}.arr{font-size:1.8em;color:var(--ac)}
+.bd{display:inline-block;padding:8px 14px;margin:4px;border-radius:30px;background:#1c2a4a;opacity:.35}.bd.on{opacity:1;background:#3b2a07;border:2px solid gold}
+canvas{background:#0b1a33;border-radius:12px;max-width:100%}
+.chip{margin:4px}.tag{color:var(--mut);font-size:.8em}
+</style></head><body>
+<header><b>⚙️ FUNCTION QUEST</b><div id="pb"><div id="pf"></div></div><span id="pt">0%</span><span>⭐ <b id="xp">0</b> XP</span>
+<button id="bm" onclick="toggleMusic()">🔊 Musik ON</button><button id="bn" onclick="toggleNar()">🗣️ Narator ON</button>
+<button onclick="saveNow(1)">💾 Simpan</button><button onclick="resetAll()">♻️ Reset</button></header>
+<nav id="nav"></nav>
+<main>
+<!-- ===== BERANDA ===== -->
+<section class="pg" id="home"><h1>FUNCTION QUEST: FASE F</h1><h2>Menjelajah Nilai Fungsi, Membangun Gerbang Komposisi</h2>
+<div class="row"><svg width="360" height="220" viewBox="0 0 360 220"><rect x="150" y="60" width="130" height="90" rx="14" fill="#1d2b4d" stroke="#a78bfa" stroke-width="3"/><text x="215" y="115" fill="#22d3ee" font-size="28" text-anchor="middle" font-style="italic" font-family="Cambria Math,serif">f(x)</text><path d="M110 105h38M282 105h50" stroke="#22d3ee" stroke-width="4" marker-end="url(#a)"/><circle cx="60" cy="70" r="20" fill="#fcd9b6"/><rect x="38" y="92" width="44" height="70" rx="12" fill="#7c3aed"/><path d="M82 110l45 0" stroke="#fcd9b6" stroke-width="9" stroke-linecap="round"/><text x="335" y="112" fill="#34d399" font-size="22">5</text><text x="120" y="98" fill="#fff" font-size="22">2</text><rect x="10" y="175" width="200" height="30" rx="6" fill="#0b1a33" stroke="#2a3a5e"/><path d="M20 198q40-40 80 0t90-20" fill="none" stroke="#22d3ee" stroke-width="3"/></svg>
+<div style="flex:1;min-width:280px" class="card"><p><i>"Halo, calon ahli matematika! Selamat datang di Function Quest. Sebelum kita menggabungkan dua fungsi, mari kita kuasai dulu cara kerja mesin nilai fungsi dengan cepat dan presisi."</i></p>
+<button class="p" onclick="startAll()">⚙️ NYALAKAN MESIN FUNGSI</button></div></div>
+<div class="card" id="map"></div></section>
+
+<!-- ===== PETUNJUK ===== -->
+<section class="pg" id="guide"><h1>PANDUAN OPERATOR MESIN FUNGSI</h1><div class="card"><ol>
+<li>Klik <b>MULAI</b> untuk masuk ke petualangan nilai fungsi.</li><li>Ikuti misi berurutan: substitusi dasar → fungsi berantai.</li>
+<li>Geser slider nilai <span class="m">x</span> pada Mesin Fungsi untuk melihat hasil <span class="m">f(x)</span>.</li><li>Klik 🔊 untuk mengatur audio.</li>
+<li>Selesaikan tantangan dan kuis akhir.</li><li>Periksa skor, XP, dan badge di halaman Hasil.</li></ol>
+<button class="p" onclick="go('goal')">⚙️ NYALAKAN MESIN FUNGSI</button></div></section>
+
+<!-- ===== TUJUAN ===== -->
+<section class="pg" id="goal"><h1>🎯 Tujuan Pembelajaran</h1><div class="card"><ol>
+<li>Mengingat konsep relasi &amp; fungsi (domain, kodomain, range).</li><li>Menentukan nilai <span class="m">f(x)</span> untuk <span class="m">x</span> tertentu.</li>
+<li>Mengevaluasi fungsi linear, kuadrat, dan pecahan sederhana.</li><li>Menentukan <span class="m">f(x+a)</span>, <span class="m">f(2x)</span>, <span class="m">f(a−1)</span>.</li>
+<li>Menganalisis mesin fungsi ganda (pra-syarat <span class="m">(f∘g)(x)</span>).</li><li>Membaca grafik untuk menentukan nilai fungsi.</li>
+<li>Menyelesaikan masalah kontekstual.</li><li>Merefleksikan penalaran aljabar.</li></ol>
+<p class="tag">Mindful • Meaningful • Joyful — Alur: Mengingat → Mengeksplorasi → Menganalisis → Menerapkan → HOTS → Refleksi</p></div></section>
+
+<!-- ===== MISI 1 ===== -->
+<section class="pg" id="m1"><h1>🔎 Misi 1 – Apa itu Fungsi &amp; Nilainya?</h1>
+<div class="card"><p>Fungsi memasangkan <b>setiap</b> anggota domain dengan <b>tepat satu</b> anggota kodomain. Himpunan hasilnya disebut <b>range</b>.</p>
+<p>Nilai fungsi <span class="m">f(a)</span> = hasil mengganti <span class="m">x</span> dengan <span class="m">a</span>.</p></div>
+<div class="card" id="q1"></div></section>
+
+<!-- ===== MISI 2 ===== -->
+<section class="pg" id="m2"><h1>🧩 Misi 2 – Mesin Fungsi Interaktif</h1>
+<div class="card"><p>Mesin: <span class="m">f(x) = x² + 2x − 3</span> &nbsp; Geser <span class="m">x</span>: <b id="sx"></b></p>
+<input type="range" id="sl" min="-3" max="4" step="1" value="2" oninput="mach()">
+<div class="row"><div class="box" id="mi"></div><span class="arr">➜</span><div class="box mach m">f(x)</div><span class="arr">➜</span><div class="box" id="mo"></div></div>
+<p id="mst" style="font-size:1.1em"></p></div>
+<div class="card"><h2>Latihan Cepat (3 benar untuk lulus: <span id="c2">0</span>/3)</h2><p id="p2"></p>
+<input type="number" id="a2"> <button onclick="chk2()">Cek</button> <div class="fb" id="f2"></div></div></section>
+
+<!-- ===== MISI 3 ===== -->
+<section class="pg" id="m3"><h1>🧮 Misi 3 – Substitusi Variabel Aljabar</h1>
+<div class="card"><p>Diketahui <span class="m">f(x) = 2x + 3</span>. Pilih pengganti <span class="m">x</span>:</p>
+<div id="chips"></div><p id="sub" style="font-size:1.2em"></p>
+<p class="tag">Kunci: SELURUH <i>x</i> diganti dengan kurung (…). Inilah fondasi <span class="m">(f∘g)(x) = f(g(x))</span>.</p></div>
+<div class="card" id="q3"></div></section>
+
+<!-- ===== MISI 4 ===== -->
+<section class="pg" id="m4"><h1>📊 Misi 4 – Grafik &amp; Evaluasi Titik</h1>
+<div class="card row"><canvas id="cv" width="520" height="360"></canvas><div style="flex:1;min-width:240px">
+<p>Berdasarkan grafik kurva, berapakah nilai <span class="m">f(2)</span>?</p><p class="tag">Grafik <span class="m">f(x) = −x² + 4x − 1</span>. Ketik jawaban lalu cek; garis putus-putus akan muncul.</p>
+<input type="number" id="a4"> <button onclick="chk4()">Cek</button><div class="fb" id="f4"></div></div></div></section>
+
+<!-- ===== MISI 5 ===== -->
+<section class="pg" id="m5"><h1>🧠 Misi 5 – Tantangan HOTS: Dua Mesin Berurutan</h1>
+<div class="card"><p>Mesin 1: <span class="m">g(x) = x + 4</span> &nbsp;|&nbsp; Mesin 2: <span class="m">f(x) = 3x − 1</span> &nbsp; Input: <b id="s5"></b></p>
+<input type="range" id="sl5" min="-3" max="8" value="2" oninput="pipe()">
+<div class="row"><div class="box" id="p5a"></div><span class="arr">➜</span><div class="box mach m">g</div><span class="arr">➜</span><div class="box" id="p5b"></div><span class="arr">➜</span><div class="box mach m">f</div><span class="arr">➜</span><div class="box" id="p5c"></div></div></div>
+<div class="card"><p>Angka <b>2</b> masuk ke mesin <span class="m">g</span> dahulu, hasilnya masuk ke mesin <span class="m">f</span>. Berapa nilai akhirnya?</p>
+<input type="number" id="a5"> <button onclick="chk5()">Cek</button><div class="fb" id="f5"></div></div></section>
+
+<!-- ===== MISI 6 ===== -->
+<section class="pg" id="m6"><h1>✍️ Misi 6 – Penerapan Kontekstual</h1>
+<div class="card"><p>Toko online: diskon 20% <span class="m">f(x)=0,8x</span>, lalu potongan member <span class="m">g(x)=x−10.000</span>. Harga awal Rp100.000 → diskon dulu, lalu member. Harga akhir?</p>
+<p>Langkah 1 — <span class="m">f(100000)</span> = Rp <input type="number" id="a6a"></p>
+<p>Langkah 2 — <span class="m">g(f(100000))</span> = Rp <input type="number" id="a6b"></p>
+<button class="p" onclick="chk6()">UJI HASIL</button><div class="fb" id="f6"></div></div></section>
+
+<!-- ===== KUIS ===== -->
+<section class="pg" id="quiz"><h1>📝 Kuis Akhir (15 Soal HOTS)</h1><div class="card" id="qz"></div></section>
+
+<!-- ===== REFLEKSI ===== -->
+<section class="pg" id="refl"><h1>🪞 Refleksi Pemahaman</h1><div class="card">
+<p>Tingkat pemahamanmu hari ini:</p><div id="emo" style="font-size:2em"></div>
+<p>Bagian yang masih menantang:</p><textarea id="r0" rows="2"></textarea>
+<h2>Metode 3-2-1</h2><p>3 hal yang kupelajari:</p><textarea id="r1" rows="3"></textarea><p>2 hal yang menarik:</p><textarea id="r2" rows="2"></textarea><p>1 komitmen perbaikan:</p><textarea id="r3" rows="1"></textarea>
+<p><button class="p" onclick="saveRefl()">Simpan Refleksi</button></p></div>
+<div class="card"><h2>🤖 AI Function-Smart</h2><p>✅ Boleh: meminta variasi soal substitusi, memeriksa langkah aljabar, mencari analogi kehidupan nyata.<br>❌ Tidak boleh: menyalin jawaban mentah tanpa memahami substitusi variabel.</p><p><b>"AI adalah alat bantu verifikasi, tetapi ketelitian substitusi ada di tanganmu."</b></p></div></section>
+
+<!-- ===== HASIL ===== -->
+<section class="pg" id="res"><h1>🏆 Hasil &amp; Rekapitulasi</h1><div class="card" id="rs"></div><div class="card" id="bdg"></div><div class="card" id="dg"></div></section>
+</main>
+<script>
+/* ===================== DATA (guru dapat mengubah soal di sini) ===================== */
+// Format kuis: [topik, soal, [opsi], indeksJawabanBenar, pembahasan]
+const QUIZ=[
+["Linear","Jika f(x)=4x−7, nilai f(3) adalah …",["5","19","−5","12"],0,"4(3)−7=12−7=5"],
+["Kuadrat","Jika f(x)=x²−3x+2, nilai f(−2) adalah …",["0","12","8","−8"],1,"(−2)²−3(−2)+2=4+6+2=12"],
+["Pecahan","Jika f(x)=(2x+1)/(x−3), nilai f(5) adalah …",["11/2","11","3","9/2"],0,"(2·5+1)/(5−3)=11/2"],
+["Aljabar","Jika f(x)=3x−2, bentuk f(x+1) adalah …",["3x+1","3x−1","3x+3","x+1"],0,"3(x+1)−2=3x+3−2=3x+1"],
+["Aljabar","Jika f(x)=x²+1, bentuk f(2x) adalah …",["4x²+1","2x²+1","4x²+2","2x²+2x"],0,"(2x)²+1=4x²+1 (kurung wajib!)"],
+["Aljabar","Jika f(x)=2x−5, bentuk f(a−1) adalah …",["2a−7","2a−6","2a−5","2a−4"],0,"2(a−1)−5=2a−2−5=2a−7"],
+["Grafik","Grafik fungsi linear melalui (0,−1) dan (2,3). Nilai f(4) adalah …",["5","7","9","11"],1,"Gradien=2, f(x)=2x−1, f(4)=7"],
+["Grafik","Parabola f(x)=x²−4x+3 memotong sumbu-X di x=1 dan x=3. Nilai f(0) (titik potong sumbu-Y) adalah …",["0","1","3","−3"],2,"f(0)=0−0+3=3"],
+["Berantai","g(x)=x+4 dan f(x)=3x−1. Nilai f(g(1)) adalah …",["14","8","12","16"],0,"g(1)=5; f(5)=14"],
+["Berantai","f(x)=x², g(x)=2x+1. Angka 3 masuk ke g dulu, lalu ke f. Hasil akhir …",["49","19","28","36"],0,"g(3)=7; f(7)=49 (19 adalah urutan terbalik)"],
+["Linear","Jika f(x)=2x+3 dan f(a)=11, nilai a adalah …",["4","5","7","3"],0,"2a+3=11 → a=4"],
+["Aljabar","Jika f(x)=x²−1, bentuk f(x+2) adalah …",["x²+4x+3","x²+3","x²+4x+4","x²+2x+3"],0,"(x+2)²−1=x²+4x+4−1"],
+["Kontekstual","Tarif taksi online f(x)=8.000+4.000x (x km). Biaya 5 km adalah …",["Rp28.000","Rp20.000","Rp32.000","Rp40.000"],0,"8.000+4.000·5=28.000"],
+["Kontekstual","Fahrenheit F(C)=9C/5+32. Suhu 25°C sama dengan … °F",["57","77","45","113"],1,"9·25/5+32=45+32=77"],
+["Kuadrat","Jika f(x)=x²−5x, nilai f(2)+f(3) adalah …",["−12","−6","0","12"],0,"f(2)=−6, f(3)=−6, jumlah −12"]];
+const PAGES=[["home","🏠 BERANDA"],["guide","📖 PETUNJUK"],["goal","🎯 TUJUAN"],["m1","🔎 MISI 1"],["m2","🧩 MISI 2"],["m3","🧮 MISI 3"],["m4","📊 MISI 4"],["m5","🧠 MISI 5"],["m6","✍️ MISI 6"],["quiz","📝 KUIS"],["refl","🪞 REFLEKSI"],["res","🏆 HASIL"]];
+const TRACK=["m1","m2","m3","m4","m5","m6","quiz","refl"]; // 8 tahap = 100% progres
+const BADGES=[["m2","🏅 OPERATOR SUBSTITUSI"],["m3","🏅 AHLI VARIABEL ALJABAR"],["m4","🏅 PEMBACA GRAFIK FUNGSI"],["m5","🏅 PERINTIS KOMPOSISI"],["ALL","🏆 GRAND MASTER FUNCTION QUEST"]];
+
+/* ===================== STATE & PENYIMPANAN ===================== */
+const K="functionQuestFaseF";const $=i=>document.getElementById(i);
+let S=null;try{S=JSON.parse(localStorage.getItem(K)||"null")}catch(e){}S=S||{xp:0,done:{},quiz:null,refl:{}};
+function saveNow(m){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}if(m)toast("Progres tersimpan 💾")}
+function resetAll(){if(confirm("Hapus semua progres?")){try{localStorage.removeItem(K)}catch(e){}location.reload()}}
+function toast(t){const d=document.createElement("div");d.textContent=t;d.style.cssText="position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#10315a;border:2px solid var(--ac);padding:10px 20px;border-radius:12px;z-index:9";document.body.appendChild(d);setTimeout(()=>d.remove(),1800)}
+function addXP(n){S.xp+=n;saveNow()}
+function done(m,xp){if(!S.done[m]){S.done[m]=1;addXP(xp||50);toast("Misi selesai! +"+(xp||50)+" XP")}draw()}
+
+/* ===================== AUDIO (Web Audio + Web Speech, tanpa internet) ===================== */
+let AC,musicOn=true,narOn=true,step=0,timer;
+function ctx(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();if(AC.state=="suspended")AC.resume();return AC}
+function tone(f,d,v,t){const a=ctx(),o=a.createOscillator(),g=a.createGain();o.type=t||"sine";o.frequency.value=f;g.gain.setValueAtTime(v,a.currentTime);g.gain.exponentialRampToValueAtTime(.0001,a.currentTime+d);o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+d)}
+const CH=[[220,261.6,329.6],[174.6,220,261.6],[261.6,329.6,392],[196,246.9,293.7]];
+function startMusic(){clearInterval(timer);if(!musicOn)return;timer=setInterval(()=>{const c=CH[(step>>3)%4];tone(c[[0,1,2,1][step%4]]*(step%8<4?1:2),.9,.035,"triangle");if(step%8==0)tone(c[0]/2,2.5,.05,"sine");step++},420)} // musik lo-fi arpeggio
+function toggleMusic(){ctx();musicOn=!musicOn;$("bm").textContent=musicOn?"🔊 Musik ON":"🔇 Musik OFF";startMusic()}
+function toggleNar(){narOn=!narOn;$("bn").textContent=narOn?"🗣️ Narator ON":"🔇 Narator OFF";speechSynthesis.cancel()}
+function say(t){if(!narOn||!window.speechSynthesis)return;speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t.replace(/[^\w\s,.!?ÀÿŒ-]/g,""));u.lang="id-ID";u.rate=.95;speechSynthesis.speak(u)}
+function sfx(k){ctx();if(k=="click")tone(660,.08,.08);else if(k=="ok"){tone(523,.15,.1);setTimeout(()=>tone(784,.25,.1),130)}else{tone(200,.3,.1,"sawtooth")}}
+document.addEventListener("click",e=>{if(e.target.closest("button"))sfx("click")});
+function fb(id,ok,msg,say_){const e=$(id);e.className="fb "+(ok?"r":"w");e.textContent=msg;sfx(ok?"ok":"no");say(say_||msg)}
+const GOOD="Hebat! Substitusi nilai kamu sangat akurat.",BAD="Belum tepat. Perhatikan kembali proses memasukkan variabelnya.";
+
+/* ===================== NAVIGASI ===================== */
+function go(id){document.querySelectorAll(".pg").forEach(p=>p.classList.toggle("on",p.id==id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.id==id));$("nav").querySelector(".on")?.scrollIntoView({inline:"center"});document.querySelector("main").scrollTop=0;(INIT[id]||(()=>{}))()}
+function startAll(){ctx();startMusic();say("Halo, calon ahli matematika! Selamat datang di Function Quest. Sebelum kita menggabungkan dua fungsi, mari kita kuasai dulu cara kerja mesin nilai fungsi dengan cepat dan presisi.");go("guide")}
+function draw(){ // perbarui nav, progres, XP, peta misi
+ $("nav").innerHTML=PAGES.map(p=>`<button data-id="${p[0]}" class="${S.done[p[0]]?"ok":""}" onclick="go('${p[0]}')">${p[1]}</button>`).join("");
+ const n=TRACK.filter(t=>S.done[t]).length,pc=Math.round(n/TRACK.length*100);$("pf").style.width=pc+"%";$("pt").textContent=pc+"%";$("xp").textContent=S.xp;
+ $("map").innerHTML="<h2>Peta Misi</h2>"+PAGES.slice(3).map(p=>`<button class="opt" onclick="go('${p[0]}')">${p[1]} ${S.done[p[0]]?"✅":""}</button>`).join("");
+ const cur=document.querySelector(".pg.on");if(cur)document.querySelector(`nav [data-id=${cur.id}]`)?.classList.add("on")}
+
+/* ===================== MESIN PILIHAN GANDA GENERIK ===================== */
+function mcq(el,q,cb){el.innerHTML=`<p>${q.t}</p>`+q.o.map((o,i)=>`<button class="opt" data-i="${i}">${"ABCD"[i]}. ${o}</button>`).join("")+`<div class="fb"></div>`;
+ el.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i,ok=i==q.a;el.querySelectorAll(".opt").forEach(x=>x.disabled=true);b.classList.add(ok?"r":"w");if(!ok)el.querySelectorAll(".opt")[q.a].classList.add("r");
+  const f=el.querySelector(".fb");f.className="fb "+(ok?"r":"w");f.innerHTML=(ok?GOOD:BAD)+"<br>"+q.e;sfx(ok?"ok":"no");say(ok?GOOD:BAD);cb&&cb(ok,i)})}
+
+/* ===================== INISIALISASI TIAP HALAMAN ===================== */
+const INIT={
+m1(){mcq($("q1"),{t:"Jika diketahui fungsi <span class='m'>f(x) = 3x − 5</span>, apa arti dari <span class='m'>f(4)</span>?",o:["Mengalikan 3 dengan 4, lalu hasilnya dikurangi 5.","Menjumlahkan 3 dengan 4, lalu dikali 5.","Mengganti variabel x dengan angka 4, lalu menghitung nilai akhirnya.","Mencari invers dari fungsi 4."],a:2,
+ e:"<b>Kartu konsep:</b> f(4) berarti ganti x dengan 4. Langkah hitungnya (opsi A): 3(4)−5 = 12−5 = <b>7</b>."},(ok)=>{if(ok){addXP(10);done("m1",40)}})},
+m2(){mach();newQ2()},
+m3(){const E=[["x+1","2(x+1)+3 = 2x+5"],["x−2","2(x−2)+3 = 2x−1"],["2x","2(2x)+3 = 4x+3"],["a+3","2(a+3)+3 = 2a+9"]];
+ $("chips").innerHTML=E.map((e,i)=>`<button class="chip" onclick="$('sub').innerHTML='f(<b>${e[0]}</b>) = <span class=m>${e[1]}</span>'">f(${e[0]})</button>`).join("");$("sub").innerHTML="Klik salah satu tombol di atas.";
+ mcq($("q3"),{t:"Jika <span class='m'>f(x)=2x+3</span>, tentukan bentuk dari <span class='m'>f(x+1)</span>!",o:["2x + 4","2(x+1) + 3 = 2x + 5","2x + 3 + 1","x² + 3"],a:1,e:"Seluruh x diganti (x+1): 2(x+1)+3 = 2x+2+3 = 2x+5. Opsi C hanya menambah 1 di akhir (keliru)."},ok=>{if(ok){addXP(10);done("m3",50)}})},
+m4(){graph(false)},
+m5(){pipe()},
+quiz(){startQuiz()},
+refl(){const E=["😕","😐","🙂","😄","🤩"];$("emo").innerHTML=E.map((e,i)=>`<span style="cursor:pointer;padding:4px;border-radius:10px;${S.refl.lv===i?"background:#10315a":""}" onclick="S.refl.lv=${i};saveNow();INIT.refl()">${e}</span>`).join("");["r0","r1","r2","r3"].forEach(i=>$(i).value=S.refl[i]||"")},
+res(){showRes()}};
+
+/* ---- Misi 2: mesin ---- */
+const F2=x=>x*x+2*x-3;
+function mach(){const x=+$("sl").value;$("sx").textContent=x;$("mi").textContent="x = "+x;$("mo").textContent="f = "+F2(x);
+ $("mst").innerHTML=`Masukkan x = ${x}<br>Hitung: (${x})² + 2(${x}) − 3 = ${x*x} ${2*x<0?"−":"+"} ${Math.abs(2*x)} − 3 = <b>${F2(x)}</b>`}
+let q2,c2=0;
+function newQ2(){q2=Math.floor(Math.random()*9)-4;$("p2").innerHTML=`Tentukan <span class="m">f(${q2})</span> untuk f(x)=x²+2x−3`;$("a2").value="";$("c2").textContent=c2}
+function chk2(){const ok=+$("a2").value===F2(q2)&&$("a2").value!=="";fb("f2",ok,ok?GOOD:BAD+` (petunjuk: (${q2})²=${q2*q2})`);if(ok){c2++;addXP(10);if(c2>=3)done("m2",50);setTimeout(newQ2,900)}}
+
+/* ---- Misi 3 sudah di INIT; Misi 4: grafik canvas ---- */
+function graph(show){const c=$("cv"),g=c.getContext("2d"),W=520,H=360,X=x=>60+(x+1)*70,Y=y=>300-(y+2)*55;g.clearRect(0,0,W,H);g.strokeStyle="#2a3a5e";g.fillStyle="#a9b8d4";g.font="14px sans-serif";
+ for(let x=-1;x<=5;x++){g.beginPath();g.moveTo(X(x),20);g.lineTo(X(x),340);g.stroke();g.fillText(x,X(x)-4,Y(0)+16)}for(let y=-2;y<=4;y++){g.beginPath();g.moveTo(10,Y(y));g.lineTo(510,Y(y));g.stroke();g.fillText(y,X(0)-16,Y(y)+4)}
+ g.strokeStyle="#fff";g.lineWidth=2;g.beginPath();g.moveTo(X(-1),Y(0));g.lineTo(X(5),Y(0));g.moveTo(X(0),20);g.lineTo(X(0),340);g.stroke();
+ g.strokeStyle="#22d3ee";g.lineWidth=3;g.beginPath();for(let x=-.6;x<=4.6;x+=.05){const y=-x*x+4*x-1;x==-.6?g.moveTo(X(x),Y(y)):g.lineTo(X(x),Y(y))}g.stroke();
+ if(show){g.setLineDash([6,5]);g.strokeStyle="#fbbf24";g.beginPath();g.moveTo(X(2),Y(0));g.lineTo(X(2),Y(3));g.lineTo(X(0),Y(3));g.stroke();g.setLineDash([]);g.fillStyle="#fbbf24";g.beginPath();g.arc(X(2),Y(3),6,0,7);g.fill()}}
+function chk4(){const ok=+$("a4").value===3&&$("a4").value!=="";graph(true);fb("f4",ok,ok?GOOD+" f(2) = −4+8−1 = 3":BAD+" Garis putus-putus menunjukkan nilai yang benar.");if(ok){addXP(20);done("m4",60)}}
+
+/* ---- Misi 5: dua mesin ---- */
+function pipe(){const x=+$("sl5").value,a=x+4;$("s5").textContent=x;$("p5a").textContent=x;$("p5b").textContent="g = "+a;$("p5c").textContent="f = "+(3*a-1)}
+function chk5(){const ok=+$("a5").value===17&&$("a5").value!=="";fb("f5",ok,ok?"Luar biasa! Kamu baru saja melakukan evaluasi fungsi berantai, yang merupakan inti dari Komposisi Fungsi!":BAD+" Langkah: g(2)=6, lalu f(6)=?");if(ok){addXP(30);done("m5",70)}}
+
+/* ---- Misi 6: kontekstual ---- */
+function chk6(){const a=+$("a6a").value,b=+$("a6b").value,ok=a===80000&&b===70000;fb("f6",ok,ok?GOOD+" Harga akhir Rp70.000.":a===80000?"Langkah 1 benar. Periksa langkah 2: potong Rp10.000 dari hasil diskon.":BAD+" Diskon 20% berarti 0,8 × 100.000.");if(ok){addXP(30);done("m6",70)}}
+
+/* ---- Kuis akhir ---- */
+let qi=0,ans=[];
+function startQuiz(){qi=0;ans=[];nextQ()}
+function nextQ(){if(qi>=QUIZ.length)return finishQuiz();const q=QUIZ[qi];
+ mcq($("qz"),{t:`<span class="tag">Soal ${qi+1}/${QUIZ.length} • ${q[0]}</span><br>${q[1]}`,o:q[2],a:q[3],e:q[4]},ok=>{ans.push(ok);const n=document.createElement("button");n.className="p";n.textContent=qi<QUIZ.length-1?"Soal berikutnya ➜":"Lihat hasil ➜";n.onclick=()=>{qi++;nextQ()};$("qz").appendChild(n)})}
+function lvl(s){return s>=90?"MASTER FUNCTION OPERATOR":s>=80?"ALGEBRA PRO":s>=70?"FUNCTION ANALYST":"EXPLORER GIGIH"}
+function finishQuiz(){const sc=Math.round(ans.filter(Boolean).length/QUIZ.length*100);S.quiz={score:sc,wrong:ans.map((a,i)=>a?-1:i).filter(i=>i>=0)};addXP(sc);done("quiz",50);
+ $("qz").innerHTML=`<h2>Skor: ${sc}</h2><p>Level: <b>${lvl(sc)}</b></p>`+(sc>=70?"":"<p>Ulangi misi yang lemah lalu coba lagi!</p>");say("Selamat! Kamu siap memasuki gerbang Komposisi Fungsi.");const b=document.createElement("button");b.className="p";b.textContent="🏆 Lihat Rekapitulasi";b.onclick=()=>go("res");$("qz").appendChild(b)}
+
+/* ---- Refleksi ---- */
+function saveRefl(){["r0","r1","r2","r3"].forEach(i=>S.refl[i]=$(i).value);if(S.refl.lv==null){toast("Pilih emoji pemahaman dahulu");return}addXP(20);done("refl",30);saveNow(1)}
+
+/* ---- Hasil ---- */
+function showRes(){const q=S.quiz,n=TRACK.filter(t=>S.done[t]).length;
+ $("rs").innerHTML=`<h2>Ringkasan</h2><p>⭐ Total XP: <b>${S.xp}</b> &nbsp; Tahap selesai: <b>${n}/${TRACK.length}</b><br>Skor kuis: <b>${q?q.score+" — "+lvl(q.score):"belum dikerjakan"}</b></p>`;
+ $("bdg").innerHTML="<h2>Badge</h2>"+BADGES.map(b=>`<span class="bd ${(b[0]=="ALL"?n==TRACK.length:S.done[b[0]])?"on":""}">${b[1]}</span>`).join("");
+ const T={Linear:"substitusi fungsi linear",Kuadrat:"substitusi fungsi kuadrat",Pecahan:"fungsi pecahan",Aljabar:"substitusi bentuk aljabar f(x+k), f(2x) — ulangi Misi 3",Grafik:"membaca grafik — ulangi Misi 4",Berantai:"fungsi berantai — ulangi Misi 5",Kontekstual:"soal kontekstual — ulangi Misi 6"};
+ $("dg").innerHTML="<h2>Analisis Diagnostik</h2>"+(q?(q.wrong.length?"<ul>"+q.wrong.map(i=>`<li>Soal ${i+1} salah → perkuat: ${T[QUIZ[i][0]]}</li>`).join("")+"</ul>":"<p>Semua jawaban benar. Siap masuk Komposisi Fungsi! 🎉</p>"):"<p>Kerjakan kuis untuk melihat analisis.</p>")}
+
+/* ===== MULAI ===== */
+draw();go("home");
+</script></body></html>
